@@ -1,0 +1,32 @@
+{
+  "name": "premiere-pro-mcp",
+  "version": "1.0.0",
+  "description": "Model Context Protocol (MCP) server for Adobe Premiere Pro automation",
+  "main": "src/index.js",
+  "type": "module",
+  "bin": {
+    "premiere-pro-mcp": "./src/index.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node test/test-server.js",
+    "install-plugin": "node scripts/install-plugin.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "premiere-pro",
+    "adobe",
+    "video-editing",
+    "automation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.1",
+    "dotenv": "^16.4.7",
+    "ws": "^8.18.0",
+    "zod": "^3.24.2"
+  }
+}

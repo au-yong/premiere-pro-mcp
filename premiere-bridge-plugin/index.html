@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premiere Pro MCP Bridge</title>
+    <style>
+        :root {
+            --bg-color: #1e1e1e;
+            --panel-bg: #282828;
+            --card-bg: #323232;
+            --border-color: #3f3f3f;
+            --text-primary: #e0e0e0;
+            --text-secondary: #9e9e9e;
+            --accent-blue: #1473e6;
+            --accent-blue-hover: #0d62c9;
+            --status-connected: #27ae60;
+            --status-disconnected: #e74c3c;
+            --status-connecting: #f39c12;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-size: 12px;
+            padding: 12px;
+            user-select: none;
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 12px;
+        }
+
+        .header-title {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            background-color: var(--card-bg);
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: var(--status-disconnected);
+            display: inline-block;
+        }
+
+        .status-dot.connected {
+            background-color: var(--status-connected);
+            box-shadow: 0 0 6px rgba(39, 174, 96, 0.6);
+        }
+
+        .status-dot.connecting {
+            background-color: var(--status-connecting);
+        }
+
+        .card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .form-row:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            color: var(--text-secondary);
+            font-size: 11px;
+            min-width: 60px;
+        }
+
+        input[type="text"] {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 5px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            flex: 1;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 6px;
+        }
+
+        button {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-family: inherit;
+        }
+
+        button:hover {
+            background-color: #3c3c3c;
+            border-color: #555;
+        }
+
+        button.primary {
+            background-color: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        button.primary:hover {
+            background-color: var(--accent-blue-hover);
+        }
+
+        .log-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 120px;
+        }
+
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            color: var(--text-secondary);
+            font-size: 11px;
+        }
+
+        .log-box {
+            flex: 1;
+            background-color: #141414;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 8px;
+            font-family: "SF Mono", Monaco, Menlo, Consolas, monospace;
+            font-size: 10px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            color: #d4d4d4;
+        }
+
+        .log-entry {
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+
+        .log-entry.info { color: #569cd6; }
+        .log-entry.success { color: #4ec9b0; }
+        .log-entry.warn { color: #ce9178; }
+        .log-entry.error { color: #f48771; }
+        .log-time { color: #666; margin-right: 5px; }
+
+        footer {
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-title">
+            <span>🎬 Premiere MCP Bridge</span>
+        </div>
+        <div class="status-badge">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText">Disconnected</span>
+        </div>
+    </header>
+
+    <div class="card">
+        <div class="form-row">
+            <label for="wsUrl">Server URL:</label>
+            <input type="text" id="wsUrl" value="ws://127.0.0.1:9098" />
+        </div>
+        <div class="form-row button-group" style="margin-top: 8px;">
+            <button class="primary" id="btnConnect">Connect</button>
+            <button id="btnDisconnect">Disconnect</button>
+            <button id="btnPing">Ping Server</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 6px;">Quick Inspection:</div>
+        <div class="button-group">
+            <button id="btnCheckProject">Project Info</button>
+            <button id="btnCheckSequence">Active Sequence</button>
+            <button id="btnListClips">List Clips</button>
+        </div>
+    </div>
+
+    <div class="log-section">
+        <div class="log-header">
+            <span>ACTIVITY LOG</span>
+            <button style="padding: 2px 6px; font-size: 10px;" id="btnClearLog">Clear</button>
+        </div>
+        <div class="log-box" id="logBox"></div>
+    </div>
+
+    <footer>
+        <span>v1.0.0</span>
+        <span>Model Context Protocol</span>
+    </footer>
+
+    <script src="js/CSInterface.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
