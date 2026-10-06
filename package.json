@@ -11,7 +11,9 @@
     "start": "node src/index.js",
     "dev": "node --watch src/index.js",
     "test": "node test/test-server.js",
-    "install-plugin": "node scripts/install-plugin.js"
+    "install-plugin": "node scripts/install-plugin.js",
+    "bundle:mcpb": "mcpb pack . premiere-pro-mcp.mcpb",
+    "validate:mcpb": "mcpb validate manifest.json"
   },
   "keywords": [
     "mcp",
@@ -36,5 +38,8 @@
     "dotenv": "^16.4.7",
     "ws": "^8.18.0",
     "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@anthropic-ai/mcpb": "^2.1.2"
   }
 }

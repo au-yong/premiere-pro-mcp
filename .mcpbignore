@@ -1,0 +1,20 @@
+# Development files
+test/
+scripts/
+.github/
+.vscode/
+.idea/
+*.md
+!README.md
+LICENSE
+premiere-bridge-plugin/
+premiere-plugin/CSXS/manifest.xml.bak
+
+# Dev dependencies in node_modules
+node_modules/@anthropic-ai/
+node_modules/@inquirer/
+node_modules/commander/
+node_modules/fflate/
+node_modules/node-forge/
+node_modules/zod-to-json-schema/
+node_modules/galactus/

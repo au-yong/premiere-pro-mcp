@@ -125,6 +125,33 @@ npm test
 
 ---
 
+## 📦 Building with MCPB (Model Context Protocol Bundle)
+
+PremiereProMCP supports the official **MCPB** (`.mcpb`) bundle specification for one-click installation and distribution in Claude Desktop and other MCPB-compliant clients without needing manual git clones or path configuration.
+
+### 1. Validate the Bundle Manifest
+```bash
+npm run validate:mcpb
+```
+*(Validates [`manifest.json`](manifest.json) against the latest MCPB v0.4 specification)*
+
+### 2. Pack the `.mcpb` Extension
+```bash
+npm run bundle:mcpb
+```
+This compiles and bundles the server, runtime dependencies, and manifest into a single portable package:
+```
+premiere-pro-mcp.mcpb
+```
+
+### 3. One-Click Installation
+- **Claude Desktop / MCPB Hosts**: Drag and drop `premiere-pro-mcp.mcpb` directly into Claude Desktop or double-click to install.
+- **Configurable Settings**: During installation, the host client will automatically prompt for optional configuration:
+  - **WebSocket Port** (default: `9098`)
+  - **Premiere App Name** (default: `Adobe Premiere Pro 2025`)
+
+---
+
 ## 🤖 AI Assistant Configuration
 
 Configure your favorite AI assistant to launch PremiereProMCP via stdio.

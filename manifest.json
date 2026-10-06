@@ -1,0 +1,53 @@
+{
+  "manifest_version": "0.4",
+  "name": "premiere-pro-mcp",
+  "display_name": "Adobe Premiere Pro MCP",
+  "version": "1.0.0",
+  "description": "Control Adobe Premiere Pro with AI via Model Context Protocol for timeline editing, Lumetri color grading, MOGRT titles, and automated exports.",
+  "author": {
+    "name": "au-yong"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/au-yong/premiere-pro-mcp.git"
+  },
+  "homepage": "https://github.com/au-yong/premiere-pro-mcp#readme",
+  "license": "MIT",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "premiere-pro",
+    "adobe",
+    "video-editing",
+    "automation"
+  ],
+  "server": {
+    "type": "node",
+    "entry_point": "src/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${extensionPath}/src/index.js"],
+      "env": {
+        "PORT": "${userConfig.port}",
+        "HOST": "127.0.0.1",
+        "PREMIERE_APP_NAME": "${userConfig.premiere_app_name}"
+      }
+    }
+  },
+  "user_config": {
+    "port": {
+      "type": "string",
+      "title": "WebSocket Port",
+      "description": "Local port used by the Premiere Pro WebSocket bridge",
+      "default": "9098",
+      "required": false
+    },
+    "premiere_app_name": {
+      "type": "string",
+      "title": "Premiere Application Name",
+      "description": "Application name on macOS (e.g. Adobe Premiere Pro 2025)",
+      "default": "Adobe Premiere Pro 2025",
+      "required": false
+    }
+  }
+}
