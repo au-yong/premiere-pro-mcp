@@ -21,7 +21,15 @@
     "video-editing",
     "automation"
   ],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/au-yong/premiere-pro-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/au-yong/premiere-pro-mcp/issues"
+  },
+  "homepage": "https://github.com/au-yong/premiere-pro-mcp#readme",
+  "author": "au-yong",
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.6.1",

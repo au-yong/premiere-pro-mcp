@@ -6,7 +6,7 @@
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
 [![Model Context Protocol](https://img.shields.io/badge/MCP-Protocol-purple.svg)](https://modelcontextprotocol.io/)
 [![Adobe Premiere Pro](https://img.shields.io/badge/Adobe%20Premiere%20Pro-2020--2025%2B-00005b.svg?logo=adobepremierepro)](https://www.adobe.com/products/premiere.html)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/your-username/PremiereProMCP/pulls)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/au-yong/premiere-pro-mcp/pulls)
 
 **Control Adobe Premiere Pro with natural language using Claude, Cursor, and Antigravity.**  
 *Automate rough cuts, silence removal, B-roll placement, Lumetri grading, MOGRT titles, chapter markers, and batch exports via the Model Context Protocol.*
@@ -87,8 +87,8 @@ flowchart LR
 ### Step 1: Clone and Install Dependencies
 
 ```bash
-git clone https://github.com/your-username/PremiereProMCP.git
-cd PremiereProMCP
+git clone https://github.com/au-yong/premiere-pro-mcp.git
+cd premiere-pro-mcp
 npm install
 ```
 
